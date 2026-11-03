@@ -14,8 +14,13 @@ function load(path: string): ArrayBuffer | null {
   return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength) as ArrayBuffer;
 }
 
-const cat = load("/bin/cat");
-const ps = load("/bin/ps");
+const isMacOS = process.platform === "darwin";
+
+// /bin/cat exists on Linux too, but it is an ELF file there. Gate on the
+// platform rather than on the path: a missing file is a skip, a non-Mach-O
+// file that happens to share the name is a false pass waiting to happen.
+const cat = isMacOS ? load("/bin/cat") : null;
+const ps = isMacOS ? load("/bin/ps") : null;
 
 describe("real system binaries", () => {
   test("/bin/cat is a universal binary with two slices", { skip: !cat }, () => {
