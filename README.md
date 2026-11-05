@@ -4,7 +4,7 @@ A Mach-O inspector that runs entirely in your browser. Drop in a macOS or iOS
 binary and see its load commands, segments, linked libraries, code signature,
 entitlements, strings and raw bytes.
 
-**Live:** _deploying_
+**Live:** https://binlens.netlify.app
 
 No uploads, no accounts, no parsing libraries.
 
